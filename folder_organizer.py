@@ -11,7 +11,7 @@ nums = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
 months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 
-def month_format(month_chars, leading_zero=True, num_first=True, month_only=False, num_only=False):
+def month_format(month_chars, separator, leading_zero=True, num_first=True, month_only=False, num_only=False):
     formatted = ["0"]
    
     for m in range(12):
@@ -27,24 +27,26 @@ def month_format(month_chars, leading_zero=True, num_first=True, month_only=Fals
         elif num_only:
             formatted.append(str(num))
         elif num_first:
-            formatted.append(f"{num} {month}")
+            formatted.append(f"{num}{sep}{month}")
         else:
-            formatted.append(f"{month} {num}")
+            formatted.append(f"{month}{sep}{num}")
 
     return formatted
 
-m4n2 = month_format(9, num_first=False)
-n2m4 = month_format(9)
-m3n2 = month_format(3, num_first=False)
-n2m3 = month_format(3)
-m4n1 = month_format(9, leading_zero=False, num_first=False)
-n1m4 = month_format(9, leading_zero=False)
-m3n1 = month_format(3, leading_zero=False, num_first=False)
-n1m3 = month_format(3, leading_zero=False)
-m4 = month_format(9, month_only=True)
-m3 = month_format(3, month_only=True)
-n2 = month_format(0, num_only=True)
-n1 = month_format(0, leading_zero=False, num_only=True)
+sep = input("\nEnter a separator (dash, space, comma, etc.): ")
+
+m4n2 = month_format(9, sep, num_first=False)
+n2m4 = month_format(9, sep)
+m3n2 = month_format(3, sep, num_first=False)
+n2m3 = month_format(3, sep)
+m4n1 = month_format(9, sep, leading_zero=False, num_first=False)
+n1m4 = month_format(9, sep, leading_zero=False)
+m3n1 = month_format(3, sep, leading_zero=False, num_first=False)
+n1m3 = month_format(3, sep, leading_zero=False)
+m4 = month_format(9, sep, month_only=True)
+m3 = month_format(3, sep, month_only=True)
+n2 = month_format(0, sep, num_only=True)
+n1 = month_format(0, sep, leading_zero=False, num_only=True)
 
 formats = [m4, m3, n2, n1, m4n2, n2m4, m3n2, n2m3, m4n1, n1m4, m3n1, n1m3]
 
@@ -63,7 +65,6 @@ print(" (11) Abbreviated month name + Corresponding number w/o leading zero")
 print(" (12) Corresponding number w/o leading zero + Abbreviated month name\n")
 
 month_folders = formats[int(input("Enter an option #: ")) - 1]
-
 
 def get_info(name):
     # return customer, year, month
