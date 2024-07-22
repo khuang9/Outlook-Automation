@@ -73,7 +73,7 @@ def get_info(name):
     i2 = name.rfind("_")
     return name[8 : i1].upper(), name[i2 + 1 : i2 + 5], int(name[i2 + 5 : i2 + 7])
 
-old_path = input("Enter current directory path:\n> ")#"TBD" #POS directory
+old_path = input("Enter current directory path:\n> ")
 new_path = input("Enter desired directory path:\n> ")
 print("-----------------------------------------------------------------------------")
 files = os.listdir(old_path)
