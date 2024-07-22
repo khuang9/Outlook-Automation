@@ -116,12 +116,13 @@ for file in files:
                     
         custs[customer] = best_match
                 
-    # dest = os.path.join(new_path, year, month_folders[month])
-    dest = os.path.join(new_path, custs[customer], year, month_folders[month])
+    dest = os.path.join(new_path, year, month_folders[month])
+    # dest = os.path.join(new_path, custs[customer], year, month_folders[month])
     os.makedirs(dest, exist_ok=True)
     if not os.path.exists(os.path.join(dest, file)):
         shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
         moved += 1
+        print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*moved/len(files))}%")
     else:
         skipped += 1
    
