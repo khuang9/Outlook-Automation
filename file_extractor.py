@@ -22,6 +22,7 @@ def extract(src, dest):
             else:
                 shutil.move(s, d)
                 extracted += 1
+                print(f"{extracted} items extracted")
                
         elif os.path.isdir(s):
             extract(s, dest)
@@ -32,5 +33,6 @@ destination = input("Enter the path to the location to extract to:\n> ")
 
 extract(source, destination)
 
+print("-------------------------------------")
 print(f"Successfully extracted {extracted} files!")
 print(f"Skipped {dupes} duplicate files")
