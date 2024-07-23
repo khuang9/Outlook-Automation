@@ -9,12 +9,16 @@ import os, shutil
 
 extracted = 0
 dupes = 0
+folder_num = 1
 
 def list_folders(src):
+    global folder_num
+   
     for item in os.listdir(src):
         s = os.path.join(src, item)
         if os.path.isdir(s):
-            print(s)
+            print(f"{folder_num}. {s}")
+            folder_num += 1
             list_folders(s)
    
 def extract(src, dest):
@@ -38,6 +42,7 @@ def extract(src, dest):
 source = input("Enter the path to the folder to extract from:\n> ")
 destination = input("Enter the path to the location to extract to:\n> ")
 
+print("\nFolders:")
 list_folders(source)
 
 print("-------------------------------------")
@@ -49,4 +54,4 @@ if input("Proceed? (y/n)\n> ").lower() == "y":
     print(f"Skipped {dupes} duplicate files")
    
 else:
-    print("Opereation terminated successfully")
+    print("Operation terminated successfully")
