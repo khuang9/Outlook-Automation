@@ -81,6 +81,7 @@ folders = os.listdir(new_path)
 
 moved = 0
 skipped = 0
+weird = 0
 
 custs = {}
 
@@ -116,19 +117,23 @@ for file in files:
                    
         custs[customer] = best_match
                
-    # dest = os.path.join(new_path, year, month_folders[month])
-    dest = os.path.join(new_path, custs[customer], year, month_folders[month])
-    os.makedirs(dest, exist_ok=True)
-    if not os.path.exists(os.path.join(dest, file)):
-        shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
-        moved += 1
-        print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*moved/len(files))}%")
+    if int(year) < 2000:
+        weird += 1
     else:
-        skipped += 1
+        # dest = os.path.join(new_path, year, month_folders[month])
+        dest = os.path.join(new_path, custs[customer], year, month_folders[month])
+        os.makedirs(dest, exist_ok=True)
+        if not os.path.exists(os.path.join(dest, file)):
+            shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
+            moved += 1
+            print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*moved/len(files))}%")
+        else:
+            skipped += 1
 
 print("-------------------------------------")
 print(f"Finished moving {moved} files!")
 print(f"Skipped {skipped} duplicate files")
+print(f"Skipped {weird} weirdly named files")
 
 freqs = {"C3":131, "C#3":139, "D3":147, "D#3":156, "E3":165, "F3":175, "F#3":185, "G3":196, "G#3":208, "A3":220, "A#3":233, "B3":247, 
          "C4":262, "C#4":277, "D4":294, "D#4":311, "E4":330, "F4":349, "F#4":370, "G4":392, "G#4":415, "A4":440, "A#4":466, "B4":494, 
