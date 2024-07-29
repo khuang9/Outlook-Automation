@@ -73,6 +73,28 @@ def get_info(name):
     i2 = name.rfind("_")
     return name[8 : i1].upper(), name[i2 + 1 : i2 + 5], int(name[i2 + 5 : i2 + 7])
 
+def get_year(year, folders):
+    for f in folders:
+        if f[-4:] == year:
+            return f
+       
+    return year
+
+def get_folder(path):
+    folders = os.listdir(path)
+   
+    for f in folders:
+        if f[-5:].lower() == "852's":
+            target = os.path.join(path, f)
+            new_path = get_folder(target)
+           
+            if new_path == target:
+                return target
+            else:
+                return new_path
+           
+    return path
+
 old_path = input("Enter current directory path:\n> ")
 new_path = input("Enter desired directory path:\n> ")
 print("-----------------------------------------------------------------------------")
@@ -120,8 +142,16 @@ for file in files:
     if int(year) < 2000:
         weird += 1
     else:
+        #todo: go through folder and change all ai-detected months to selected format
+        # todo: maybe ai to determine whivh folder is which month and standardize all folder names
         # dest = os.path.join(new_path, year, month_folders[month])
-        dest = os.path.join(new_path, custs[customer], year, month_folders[month])
+        target_dir = get_folder(os.path.join(new_path, custs[customer]))
+        dest = os.path.join(target_dir, get_year(year, os.listdir(target_dir)), month_folders[month])
+        # for f in inside:
+        #     if f[-5:].lower() == "852's":
+        #         dest = os.path.join(new_path, custs[customer], f, get_year(year, os.listdir(os.path.join(new_path, custs[customer], f))), month_folders[month])
+        #         break
+           
         os.makedirs(dest, exist_ok=True)
         if not os.path.exists(os.path.join(dest, file)):
             shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
@@ -135,10 +165,10 @@ print(f"Finished moving {moved} files!")
 print(f"Skipped {skipped} duplicate files")
 print(f"Skipped {weird} weirdly named files")
 
-freqs = {"C3":131, "C#3":139, "D3":147, "D#3":156, "E3":165, "F3":175, "F#3":185, "G3":196, "G#3":208, "A3":220, "A#3":233, "B3":247, 
-         "C4":262, "C#4":277, "D4":294, "D#4":311, "E4":330, "F4":349, "F#4":370, "G4":392, "G#4":415, "A4":440, "A#4":466, "B4":494, 
+freqs = {"C3":131, "C#3":139, "D3":147, "D#3":156, "E3":165, "F3":175, "F#3":185, "G3":196, "G#3":208, "A3":220, "A#3":233, "B3":247,
+         "C4":262, "C#4":277, "D4":294, "D#4":311, "E4":330, "F4":349, "F#4":370, "G4":392, "G#4":415, "A4":440, "A#4":466, "B4":494,
          "C5":523, "C#5":554, "D5":587, "D#5":622, "E5":659, "F5":698, "F#5":740, "G5":784, "G#5":831, "A5":880, "A#5":932, "B5":988, }
 
 song = ["C4", "D4", "C4", "A3", "A3", "A3", "G3", "A3", "A#3", "A3"]
 for note in song:
-    winsound.Beep(freqs[note], 500)
+    winsound.Beep(freqs[note], 1000)
