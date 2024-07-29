@@ -84,7 +84,7 @@ def get_folder(path):
     folders = os.listdir(path)
    
     for f in folders:
-        if f[-5:].lower() == "852's":
+        if f[-5:].lower() == "indicator":
             target = os.path.join(path, f)
             new_path = get_folder(target)
            
@@ -147,11 +147,7 @@ for file in files:
         # dest = os.path.join(new_path, year, month_folders[month])
         target_dir = get_folder(os.path.join(new_path, custs[customer]))
         dest = os.path.join(target_dir, get_year(year, os.listdir(target_dir)), month_folders[month])
-        # for f in inside:
-        #     if f[-5:].lower() == "852's":
-        #         dest = os.path.join(new_path, custs[customer], f, get_year(year, os.listdir(os.path.join(new_path, custs[customer], f))), month_folders[month])
-        #         break
-           
+        
         os.makedirs(dest, exist_ok=True)
         if not os.path.exists(os.path.join(dest, file)):
             shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
