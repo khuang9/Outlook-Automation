@@ -70,8 +70,15 @@ month_folders = formats[int(input("Enter an option #: ")) - 1]
 def get_info(name):
     # return customer, year, month
     i1 = name.find("-")
-    i2 = name.rfind("_")
-    return name[8 : i1].upper(), name[i2 + 1 : i2 + 5], int(name[i2 + 5 : i2 + 7])
+    i2 = -1
+    i3 = name.rfind("_")
+    
+    for i in range(i1 - 1, -1, -1):
+      if name[i] == "_":
+        i2 = i
+        break
+      
+    return name[i2 + 1 : i1].upper(), name[i3 + 1 : i3 + 5], int(name[i3 + 5 : i3 + 7])
 
 def get_year(year, folders):
     for f in folders:
