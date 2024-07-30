@@ -86,7 +86,7 @@ def get_info(name):
 
 def get_year(year, folders):
     for f in folders:
-        if f[-4:] == year and "852's" in f.lower() or f == year:
+        if f[-4:] == year and "852'S" in f.upper() or f == year:
             return f
        
     return year
