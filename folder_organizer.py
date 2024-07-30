@@ -78,7 +78,7 @@ def get_info(name):
         i2 = i
         break
       
-    return name[i2 + 1 : i1].upper(), name[i3 + 1 : i3 + 5], int(name[i3 + 5 : i3 + 7])
+    return name[i2 + 1 : i1].upper(), name[i3 + 1 : i3 + 5], name[i3 + 5 : i3 + 7]
 
 def get_year(year, folders):
     for f in folders:
@@ -146,22 +146,28 @@ for file in files:
                    
         custs[customer] = best_match
                
-    if int(year) < 2000:
+    try:
+        int(year)
+        month = int(month)
+    except ValueError:
         weird += 1
     else:
-        #todo: go through folder and change all ai-detected months to selected format
-        # todo: maybe ai to determine whivh folder is which month and standardize all folder names
-        # dest = os.path.join(new_path, year, month_folders[month])
-        target_dir = get_folder(os.path.join(new_path, custs[customer]))
-        dest = os.path.join(target_dir, get_year(year, os.listdir(target_dir)), month_folders[month])
-        
-        os.makedirs(dest, exist_ok=True)
-        if not os.path.exists(os.path.join(dest, file)):
-            shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
-            moved += 1
-            print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*moved/len(files))}%")
+        if int(year) < 2000:
+            weird += 1
         else:
-            skipped += 1
+            #todo: go through folder and change all ai-detected months to selected format
+            # todo: maybe ai to determine whivh folder is which month and standardize all folder names
+            # dest = os.path.join(new_path, year, month_folders[month])
+            target_dir = get_folder(os.path.join(new_path, custs[customer]))
+            dest = os.path.join(target_dir, get_year(year, os.listdir(target_dir)), month_folders[month])
+            
+            os.makedirs(dest, exist_ok=True)
+            if not os.path.exists(os.path.join(dest, file)):
+                shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
+                moved += 1
+                print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*moved/len(files))}%")
+            else:
+                skipped += 1
 
 print("-------------------------------------")
 print(f"Finished moving {moved} files!")
