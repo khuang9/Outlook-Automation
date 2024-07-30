@@ -165,10 +165,11 @@ for file in files:
             if not os.path.exists(os.path.join(dest, file)):
                 shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
                 moved += 1
-                print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*moved/len(files))}%")
+                print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*moved/len(files))}%", end="\r")
             else:
                 skipped += 1
 
+print()
 print("-------------------------------------")
 print(f"Finished moving {moved} files!")
 print(f"Skipped {skipped} duplicate files")

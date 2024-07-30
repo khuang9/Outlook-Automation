@@ -33,7 +33,7 @@ def extract(src, dest):
             else:
                 shutil.move(s, d)
                 extracted += 1
-                print(f"{extracted} items extracted")
+                print(f"{extracted} items extracted", end="\r")
                
         elif os.path.isdir(s):
             extract(s, dest)
@@ -48,7 +48,8 @@ list_folders(source)
 print("-------------------------------------")
 if input("Proceed? (y/n)\n> ").lower() == "y":
     extract(source, destination)
-
+    
+    print()
     print("-------------------------------------")
     print(f"Successfully extracted {extracted} files!")
     print(f"Skipped {dupes} duplicate files")

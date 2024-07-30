@@ -57,7 +57,7 @@ if recip.Resolved:
                 else:
                     m.SaveAs(os.path.join(save_location, f"{m.Subject}.msg"), 3)
                     saved += 1
-                    print(f"{saved}/{total} messages saved.....{'%.2f'%(100*saved/total)}%")
+                    print(f"{saved}/{total} messages saved.....{'%.2f'%(100*saved/total)}%", end="\r")
             elif m.SenderName != "fake sender":
                 skipped.append(m.Subject)
             else:
@@ -69,6 +69,8 @@ if recip.Resolved:
         summary[1] += fwd
         summary[2] += len(dupes)
         summary[3] += len(skipped)
+        print()
+        print("-----------------------------------")
         print(f"Finished saving {len2 - len1} messages!\n")
         print(f"Filtered out {fwd} forwarded messages\n")
         print(f"Filtered out {len(dupes)} duplicate messages:")
@@ -80,6 +82,7 @@ if recip.Resolved:
             print(f" {i+1}. {skipped[i]}")
         print("")
             
+    print("-----------------------------------")
     print("Summary:")
     print(f"Successfully saved {summary[0]} messages")
     print(f"Filtered out {summary[1]} forwarded messages")
