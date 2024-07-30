@@ -57,6 +57,7 @@ if recip.Resolved:
                 else:
                     m.SaveAs(os.path.join(save_location, f"{m.Subject}.msg"), 3)
                     saved += 1
+                    print("\x1b[2K", end="\r")
                     print(f"{saved}/{total} messages saved.....{'%.2f'%(100*saved/total)}%", end="\r")
             elif m.SenderName != "fake sender":
                 skipped.append(m.Subject)

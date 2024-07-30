@@ -33,6 +33,7 @@ def extract(src, dest):
             else:
                 shutil.move(s, d)
                 extracted += 1
+                print("\x1b[2K", end="\r")
                 print(f"{extracted} items extracted", end="\r")
                
         elif os.path.isdir(s):

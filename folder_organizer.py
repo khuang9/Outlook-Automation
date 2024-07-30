@@ -165,6 +165,7 @@ for file in files:
             if not os.path.exists(os.path.join(dest, file)):
                 shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
                 moved += 1
+                print("\x1b[2K", end="\r")
                 print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*moved/len(files))}%", end="\r")
             else:
                 skipped += 1
