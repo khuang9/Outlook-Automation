@@ -7,6 +7,10 @@ Created on Fri Jul 19 12:03:19 2024
 
 import os, shutil, winsound
 from string_compare import match_degree
+from colour_text import colour
+
+loading_length = 33
+loading_colour = (50, 205, 50)
 
 nums = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
 months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -165,8 +169,10 @@ for file in files:
             if not os.path.exists(os.path.join(dest, file)):
                 shutil.move(os.path.join(old_path, file), os.path.join(dest, file))
                 moved += 1
+                percent = moved/len(files)
+                num_slashes = int(loading_length*percent)
                 print("\x1b[2K", end="\r")
-                print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*moved/len(files))}%", end="\r")
+                print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*percent)}% [{colour('/'*num_slashes, loading_colour)}{' '*(loading_length - num_slashes)}]", end="\r")
             else:
                 skipped += 1
 
