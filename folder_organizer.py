@@ -105,6 +105,15 @@ def get_folder(path):
                 return new_path
            
     return path
+  
+def rename_dupe(file_name, number, renamed_already=True):
+    if renamed_already:
+        i1 = file_name.rfind("(")
+        i2 = file_name.rfind(")")
+        return file_name[:i1 + 1] + number + file_name[i2:]
+    else:
+        i = file_name.rfind(".")
+        return file_name[:i] + f" ({number})" + file_name[i:]
 
 old_path = input("Enter current directory path:\n> ")
 new_path = input("Enter desired directory path:\n> ")
@@ -117,6 +126,19 @@ skipped = 0
 weird = 0
 
 custs = {}
+
+print("Should duplicates be:")
+print("(1) Skipped")
+print("(2) Renamed and moved")
+
+if input("> ") == "2":
+    action = "Renamed and moved"
+    skip_dupes = False
+else:
+    action = "Skipped"
+    skip_dupes = True
+   
+print("-----------------------------------------------------------------------------")
 
 for file in files:
     customer, year, month = get_info(file)
@@ -174,6 +196,21 @@ for file in files:
                 print("\x1b[2K", end="\r")
                 print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*percent)}% [{colour('/'*num_slashes, loading_colour)}{' '*(loading_length - num_slashes)}]", end="\r")
             else:
+                if not skip_dupes:
+                    num = 1
+                    if file[file.rfind(".") - 1] == ")" and file[file.rfind(".") - 3] == "(" :
+                        renamed = True
+                    else:
+                        renamed = False
+                       
+                    new_file = rename_dupe(file, str(num), renamed_already=renamed)
+                    while os.path.exists(os.path.join(dest, new_file)):
+                        num += 1
+                        new_file = rename_dupe(new_file, str(num))
+                       
+                    os.rename(os.path.join(old_path, file), os.path.join(old_path, new_file))
+                    shutil.move(os.path.join(old_path, new_file), os.path.join(dest, new_file))
+                
                 skipped += 1
 
 print()
