@@ -7,15 +7,20 @@ Created on Tue Jul 23 14:31:00 2024
 
 import os, shutil, winsound
 from range_finder import get_range
+from colour_text import colour
+
+loading_length = 33
+loading_colour = (0, 255, 0)
 
 extracted = 0
 dupes = 0
 folder_num = 1
 folders = []
 selected_folders = []
+total_files = 0
 
 def list_folders(src):
-    global folder_num
+    global folder_num, total_files
    
     for item in os.listdir(src):
         s = os.path.join(src, item)
@@ -24,6 +29,8 @@ def list_folders(src):
             folders.append(s)
             folder_num += 1
             list_folders(s)
+        elif os.path.isfile(s):
+            total_files += 1
    
 def extract(src, dest, custom=False):
     global extracted, dupes
@@ -37,8 +44,10 @@ def extract(src, dest, custom=False):
             else:
                 shutil.move(s, d)
                 extracted += 1
+                percent = extracted/total_files
+                num_slashes = int(loading_length*percent)
                 print("\x1b[2K", end="\r")
-                print(f"{extracted} items extracted", end="\r")
+                print(f"{extracted}/{total_files} items extracted.....{'%.2f'%(100*percent)}% [{colour('/'*num_slashes, loading_colour)}{' '*(loading_length - num_slashes)}]", end="\r")
                
         elif os.path.isdir(s):
             if not custom or s in selected_folders:

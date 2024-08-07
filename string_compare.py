@@ -59,3 +59,4 @@ def match_degree(orig, compare):
     rem = 1 - removed/(removed + len(compare))
    
     return (sim + rem)/2 + penalty
+  
