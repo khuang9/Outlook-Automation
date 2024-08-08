@@ -27,13 +27,6 @@ with open(os.path.join(folder_type, "tokenizer.json"), "r") as t1, open(os.path.
     
 months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 new_names = ["01 January", "02 February", "03 March", "04 April", "05 May", "06 June", "07 July", "08 August", "09 September", "10 October", "11 November", "12 December"]
-
-# def get_year(year, folders):
-#     for f in folders:
-#         if f == year or (f[:4] == year or f[-4:] == year) and ("852S" in f.upper() or "852'S" in f.upper() or "POS" in f.upper()):
-#             return f
-        
-#     return None
             
 def process_month(inp, num_spaces, pad_dash=True, pop_years=False):
     if pad_dash:
@@ -82,9 +75,6 @@ def predict_type(inp):
     else:
         if len(inp) == 2 and 1 <= int(inp) <= 12:
             return "Month"
-        
-    if "excel" in inp.lower(): # todo: redact
-        return "Not month"
     
     max_match = 0
     for month in months:
@@ -118,9 +108,6 @@ def rename_folders(src):
             print(f"{src}{os.sep}{colour(item, (0, 255, 255))} left as is\n")
             rename_folders(s)
                 
-# todo: if statement
-# todo: if prediction between 0.3 and 0.7, flag as needing review
-# todo: if dec in name and classified as not month, notify user or smth
-            
+           
 source = input("Enter desired directory to change names in:\n> ")
 rename_folders(source)
