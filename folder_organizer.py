@@ -125,6 +125,9 @@ moved = 0
 skipped = 0
 weird = 0
 
+percent = 0
+num_slashes = 0
+
 custs = {}
 
 print("Should duplicates be:")
@@ -193,8 +196,6 @@ for file in files:
                 moved += 1
                 percent = moved/len(files)
                 num_slashes = int(loading_length*percent)
-                print("\x1b[2K", end="\r")
-                print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*percent)}% [{colour('/'*num_slashes, loading_colour)}{' '*(loading_length - num_slashes)}]", end="\r")
             else:
                 if not skip_dupes:
                     num = 1
@@ -212,6 +213,9 @@ for file in files:
                     shutil.move(os.path.join(old_path, new_file), os.path.join(dest, new_file))
                 
                 skipped += 1
+                
+            print("\x1b[2K", end="\r")
+            print(f"{moved}/{len(files)} files moved.....{'%.2f'%(100*percent)}% [{colour('/'*num_slashes, loading_colour)}{' '*(loading_length - num_slashes)}] | {skipped} duplicates found", end="\r")
 
 print()
 print("-------------------------------------")
