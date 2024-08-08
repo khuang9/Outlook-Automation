@@ -19,6 +19,9 @@ folders = []
 selected_folders = []
 total_files = 0
 
+percent = 0
+num_slashes = 0
+
 def list_folders(src):
     global folder_num, total_files
    
@@ -46,8 +49,9 @@ def extract(src, dest, custom=False):
                 extracted += 1
                 percent = extracted/total_files
                 num_slashes = int(loading_length*percent)
-                print("\x1b[2K", end="\r")
-                print(f"{extracted}/{total_files} items extracted.....{'%.2f'%(100*percent)}% [{colour('/'*num_slashes, loading_colour)}{' '*(loading_length - num_slashes)}]", end="\r")
+                
+            print("\x1b[2K", end="\r")
+            print(f"{extracted}/{total_files} items extracted.....{'%.2f'%(100*percent)}% [{colour('/'*num_slashes, loading_colour)}{' '*(loading_length - num_slashes)}] | {dupes} duplicates found", end="\r")
                
         elif os.path.isdir(s):
             if not custom or s in selected_folders:
