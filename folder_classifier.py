@@ -33,7 +33,7 @@ labels = [labels[li] for li in indices]
 
 
 max_len = 50
-max_words = 50
+max_words = 62
 training_size = int(len(names) * 0.65)
 epochs = 20
 
