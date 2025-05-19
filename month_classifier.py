@@ -14,13 +14,13 @@ from random import shuffle
 names = []
 labels = []
 
-with open("file.txt", "r") as f:
-    fr = [r.rstrip() for r in f.readlines()]
+with open("months.txt", "r") as f:
+    mr = [r.rstrip() for r in f.readlines()]
     
-for r in fr:
-    slash_index = r.rfind("/")
-    names.append(r[:slash_index])
-    labels.append(int(r[slash_index + 1:]) - 1)
+for m in mr:
+    slash_index = m.rfind("/")
+    names.append(m[:slash_index])
+    labels.append(int(m[slash_index + 1:]) - 1)
     
 indices = [i for i in range(len(names))]
 shuffle(indices)
