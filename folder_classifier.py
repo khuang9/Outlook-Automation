@@ -14,16 +14,16 @@ from random import shuffle
 names = []
 labels = []
 
-with open("file1.txt", "r") as f1, open("file2.txt", "r") as f2:
-    ar = [r.rstrip() for r in f1.readlines()]
-    br = [r.rstrip() for r in f2.readlines()]
+with open("months.txt", "r") as f1, open("notmonths.txt", "r") as f2:
+    mr = [r.rstrip() for r in f1.readlines()]
+    nr = [r.rstrip() for r in f2.readlines()]
    
-for a in ar:
-    names.append(a)
+for m in mr:
+    names.append(m[:m.rfind("/")])
     labels.append(0)
 
-for b in br:
-    names.append(b)
+for n in nr:
+    names.append(n)
     labels.append(1)
    
 indices = [i for i in range(len(names))]
@@ -57,7 +57,8 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(1, activation="sigmoid")
 ])
 
-model.compile(optimizer="adam", loss="binary_crossentropy")
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+model.fit(n_train, l_train, epochs=epochs, validation_data=(n_test, l_test))
 
 with open("tokenizer.json", "w") as f:
     f.write(tokenizer.to_json())
